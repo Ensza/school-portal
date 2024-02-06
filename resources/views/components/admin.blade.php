@@ -16,7 +16,7 @@
             background-size: cover;
             box-shadow: inset 0 0 0 2000px rgba(0,0,0,0.75);">
             <div style="min-width: 20em;">
-                <div class="row text-light p-2">
+                <div class="row text-light p-2 mt-2">
                     <h2>Cainta Senior High School</h2>
                 </div>
                 <div class="p-2">
@@ -33,17 +33,33 @@
             </div>
         </div>
         <div id="main" class="w-100 p-0 d-flex flex-column mh-100 overflow-hidden" style="z-index: 2;background-color: #eeeeee">
-            <div class="w-100 border-bottom p-2 d-flex">
+            <div class="w-100 border-bottom p-2 d-flex" style="min-width: 400px">
                 <div class="w-100 d-flex">
                     <button class="btn btn-primary" id="collapse-sidebar">col</button>
                 </div>
-                <div class="me-3 px-2 d-flex align-items-center rounded" type="button" style="background-color: cornflowerblue">
+                <div id="profile" class="me-3 py-1 px-2 d-flex align-items-center rounded" type="button" style="background-color: cornflowerblue">
                     <img src="resources\img\f.png" class="border border-1 rounded-circle" alt="" style="height: 30px; width: 30px">
                     <span class="ms-2 text-light">Admin</span>
                 </div>
             </div>
-            <div class="overflow-auto p-2" style="min-width: 400px">
-                {{$slot}}
+
+
+            <div class="overflow-auto" style="min-width: 400px;">
+                <div id="profile-panel" class="list-group me-4 shadow position-absolute end-0 d-none" style="min-width: 10em">
+                    <button class="btn btn-light">
+                        Logout
+                    </button>
+                    <a href="/logout" class="btn btn-danger">
+                        Logout
+                    </a>
+                </div>
+
+                
+                <div class="p-2 h-100">
+                    {{$slot}}
+                </div>
+
+                
             </div>
         </div>
         <script>
@@ -81,6 +97,18 @@
                     
                     if(win.width() > 800 && $('#sidebar').attr('state')=='collapsed'){
                         $('#collapse-sidebar').click();
+                    }
+                });
+
+                $("#profile").on("click", function() {
+                    $("#profile-panel").toggleClass("d-none");
+                });
+
+                $(document).mouseup(function(e) {
+
+                    if (!$("#profile-panel").is(e.target) && $("#profile-panel").has(e.target).length === 0) 
+                    {
+                        $("#profile-panel").addClass("d-none");
                     }
                 });
             });
