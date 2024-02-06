@@ -37,7 +37,7 @@ Route::get('logout', function () {
 ///////////////////////  Admin  ////////////////////////
 
 Route::get('admin', function(){
-    return view('admin.curriculum');
+    return view('admin.dashboard');
 })->middleware('admin');
 
 Route::get('test', function(){

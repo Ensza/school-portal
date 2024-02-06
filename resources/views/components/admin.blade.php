@@ -21,8 +21,8 @@
                 </div>
                 <div class="p-2">
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                        The current link item
+                        <a href="#" id="dashboard-link" class="list-group-item list-group-item-action" aria-current="true">
+                        Dashboard
                         </a>
                         <a href="#" class="list-group-item list-group-item-action">A second link item</a>
                         <a href="#" class="list-group-item list-group-item-action">A third link item</a>
