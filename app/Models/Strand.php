@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Strand extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'code',
+        'track_id'
+    ];
 }

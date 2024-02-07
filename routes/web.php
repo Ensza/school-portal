@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\TrackController;
+use App\Http\Controllers\StrandController;
+use App\Models\Track;
+use App\Models\Strand;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +44,54 @@ Route::get('admin', function(){
     return view('admin.dashboard');
 })->middleware('admin');
 
-Route::get('test', function(){
-    return Auth::user()->role;
-    return Auth::check();
+Route::get('admin/tracks-and-strands',function(){
+    return view('admin.tracks_and_strands',['tracks'=>Track::all(), 'strands'=>Strand::all()]); 
+})->middleware('admin');
+
+Route::post('admin/add-track',function(){
+    $validator = validator(request()->all(), //validate add track form request
+        [
+            'name'=>'required',
+            'code'=>'required|unique:tracks'
+        ],[
+            'name'=>'track name is required',
+            'code.required'=>'track code is required',
+            'code.unique'=>'track code must be unique'
+        ]);
+    $validation_result = ['is_invalid'=>$validator->fails(), 'errors'=>$validator->errors()];
+    if(!$validator->fails()){
+        $validation_result['new_track'] = TrackController::create(request()->all());
+        if(!$validation_result['new_track']){ //if adding to database failed
+            return ['is_invalid'=>true, 'errors'=>['error'=>'something went wrong']];
+        }else{
+        }
+    }
+    return $validation_result;
 });
+
+Route::post('admin/add-strand',function(){
+    $validator = validator(request()->all(), //validate add stran form request
+        [
+            'name'=>'required',
+            'code'=>'required|unique:strands',
+            'track_id'=>'required|exists:tracks,id'
+        ],[
+            'name'=>'strand name is required',
+            'code.required'=>'strand code is required',
+            'code.unique'=>'strand code must be unique',
+            'track_id.required'=>'please select a track',
+            'track_id.exists'=>'track doesn\'t exist'
+        ]);
+    $validation_result = ['is_invalid'=>$validator->fails(), 'errors'=>$validator->errors()];
+    if(!$validator->fails()){
+        if(!StrandController::create(request()->all())){ //if adding to database failed
+            return ['is_invalid'=>true, 'errors'=>['error'=>'something went wrong']];
+        }
+    }
+    return $validation_result;
+});
+
+Route::get('test', function(){
+    //return TrackController::add_track(request()->all());
+});
+
