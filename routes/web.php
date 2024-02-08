@@ -38,6 +38,10 @@ Route::get('logout', function () {
     return redirect('/');
 });
 
+/////////////////////// dataTables /////////////////////
+
+Route::get('/tracks', [TrackController::class, 'dataTable'])->name('tracks.data')->middleware('admin');
+
 ///////////////////////  Admin  ////////////////////////
 
 Route::get('admin', function(){
@@ -45,7 +49,11 @@ Route::get('admin', function(){
 })->middleware('admin');
 
 Route::get('admin/tracks-and-strands',function(){
-    return view('admin.tracks_and_strands',['tracks'=>Track::all(), 'strands'=>Strand::all()]); 
+    return view('admin.tracks-and-strands',[
+        'tracks'=>Track::all(), 
+        'strands'=>Strand::all(),
+        'tracks_table'=>TrackController::dataTable()
+    ]); 
 })->middleware('admin');
 
 Route::post('admin/add-track',function(){
@@ -91,7 +99,9 @@ Route::post('admin/add-strand',function(){
     return $validation_result;
 });
 
-Route::get('test', function(){
-    //return TrackController::add_track(request()->all());
-});
+// Route::get('test', function(){
+//     return TrackController::dataTable();
+// });
 
+
+Auth::routes();

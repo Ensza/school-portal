@@ -7,38 +7,7 @@
     <h1>Tracks and Strands</h1>
     <div id="tracks" class="p-2 shadow-sm rounded bg-light mt-4">
         <h2 class="fw-light">Tracks</h2>
-        <div class="container my-3 overflow-auto">
-            <div style="min-width: 600px">
-                <div class="row p-2 border-bottom">
-                    <div class="col-4">
-                        <span class="fw-bold">Track name</span>
-                    </div>
-                    <div class="col-2">
-                        <span class="fw-bold">Track code</span>
-                    </div>
-                    <div class="col">
-                        <span class="fw-bold">Strands #</span>
-                    </div>
-                </div>
-                @foreach ($tracks as $track)
-                <div class="row p-2 border-bottom">
-                    <div class="col-4 d-flex align-items-center">
-                        {{$track->name}}
-                    </div>
-                    <div class="col-2 d-flex align-items-center">
-                        {{$track->code}}
-                    </div>
-                    <div class="col-2 d-flex align-items-center">
-                        {{$track->strands->count()}}
-                    </div>
-                    <div class="col-4 border-start d-flex align-items-center justify-content-center p-1">
-                        <button class="btn btn-sm btn-primary me-1">Edit</button>
-                        <button class="btn btn-sm btn-danger">Delete</button>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
+        {!!$tracks_table!!}
         <div class="rounded border my-4 position-relative" style="background-color: #fff;">
             <div class="p-2">
                 <h4 class="fw-light">Add new track</h4>
