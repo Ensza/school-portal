@@ -23,7 +23,10 @@ class TracksDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function(Track $track){
-                return view('components.edit-delete-buttons',['track'=>$track,'table_name'=>'tracks']);
+                return view('components.edit-delete-buttons',[
+                    'row_id'=>$track->id,'table_name'=>'tracks',
+                    'disabled'=>$track->strands->count()>0 ? true : false,
+                ]);
             })
             ->addColumn('strands-count', function(Track $track){
                 return $track->strands->count();
@@ -51,7 +54,6 @@ class TracksDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -74,11 +76,11 @@ class TracksDataTable extends DataTable
     {
         return [
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center')
-                  ->addClass('text-nowrap'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center')
+                ->addClass('text-nowrap'),
             Column::make('name')->title('Track name'),
             Column::make('code')->title('Track code'),
             Column::computed('strands-count')

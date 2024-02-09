@@ -30,6 +30,9 @@
                 </form>
                 <div id="add-track-alert" class="alert alert-danger" role="alert" style="display: none">
                 </div>
+                <div id="add-track-alert-success" class="alert alert-success" role="alert" style="display: none">
+                New track added!
+                </div>
             </div>
             <x-loader id="add-track-loader"/>
         </div>
@@ -140,7 +143,9 @@
                         $('#add-track-loader').removeClass('d-flex').addClass('d-none');
                         $('#add-track-alert').html(errors_list).show();
                     }else{
-                        location.reload();
+                        $('#add-track-loader').removeClass('d-flex').addClass('d-none');
+                        $('#add-track-alert-success').show();
+                        $('#reload-tracks-btn').click();
                     }
                     
                 }

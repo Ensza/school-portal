@@ -17,7 +17,7 @@
             box-shadow: inset 0 0 0 2000px rgba(0,0,0,0.75);">
             <div style="min-width: 20em;">
                 <div class="row text-light p-2 mt-2">
-                    <h2>Cainta Senior High School</h2>
+                    <h2>{{env('SCHOOL_NAME')}}</h2>
                 </div>
                 <div class="p-2">
                     <div class="list-group">
