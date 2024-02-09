@@ -41,6 +41,7 @@ Route::get('logout', function () {
 /////////////////////// dataTables /////////////////////
 
 Route::get('/tracks', [TrackController::class, 'dataTable'])->name('tracks.data')->middleware('admin');
+Route::get('/strands', [StrandController::class, 'dataTable'])->name('strands.data')->middleware('admin');
 
 ///////////////////////  Admin  ////////////////////////
 
@@ -52,7 +53,8 @@ Route::get('admin/tracks-and-strands',function(){
     return view('admin.tracks-and-strands',[
         'tracks'=>Track::all(), 
         'strands'=>Strand::all(),
-        'tracks_table'=>TrackController::dataTable()
+        'tracks_table'=>TrackController::dataTable(),
+        'strands_table'=>StrandController::dataTable()
     ]); 
 })->middleware('admin');
 

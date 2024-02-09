@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Track;
+use App\Models\Strand;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -11,8 +11,9 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Support\Str;
 
-class TracksDataTable extends DataTable
+class StrandsDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -21,24 +22,24 @@ class TracksDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        $query = Track::with('strands'); //make $query a relationship
+        $query = Strand::with('track');
         return (new EloquentDataTable($query))
-            ->addColumn('action', function(Track $track){
+            ->addColumn('action', function(Strand $strand){
                 return view('components.edit-delete-buttons',[
-                    'row_id'=>$track->id,'table_name'=>'tracks',
-                    'disabled'=>$track->strands->count()>0 ? true : false,
+                    'row_id'=>$strand->id,'table_name'=>'tracks',
+                    'disabled'=>false,
                 ]);
             })
-            ->addColumn('strands-count', '{{count($strands)}}') //return the strands count as content for column
-            ->setRowId(function(Track $track){
-                return "track-id-$track->id";
+            ->addColumn('track', '{{$track["code"]}}')
+            ->setRowId(function(Strand $strand){
+                return "strand-id-$strand->id";
             });
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Track $model): QueryBuilder
+    public function query(Strand $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -49,7 +50,7 @@ class TracksDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('tracks-table')
+                    ->setTableId('strands-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -61,11 +62,9 @@ class TracksDataTable extends DataTable
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
-                            ->attr([
-                                'id'=>'reload-tracks-btn'
-                            ])
+                            ->attr(['id'=>'reload-strands-btn'])
                     ])
-                    ->postAjax(route('tracks.data'))
+                    ->postAjax(route('strands.data'))
                     ->lengthMenu([[10,25,50,100,-1],[10,25,50,100,'All']]);
     }
 
@@ -76,15 +75,17 @@ class TracksDataTable extends DataTable
     {
         return [
             Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center')
-                ->addClass('text-nowrap'),
-            Column::make('name')->title('Track name'),
-            Column::make('code')->title('Track code'),
-            Column::make('strands-count')
-                ->title('Strands #')
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(60)
+                  ->addClass('text-center')
+                  ->addClass('text-nowrap'),
+            Column::make('name')
+                ->title('Strand name'),
+            Column::make('code')
+                ->title('Strand code'),
+            Column::make('track')
+                ->name('track.code') //allows for searchable column with relationship
         ];
     }
 
@@ -93,6 +94,6 @@ class TracksDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Tracks_' . date('YmdHis');
+        return 'Strands_' . date('YmdHis');
     }
 }
