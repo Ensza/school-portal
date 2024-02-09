@@ -22,7 +22,7 @@ class StrandsDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        $query = Strand::with('track');
+        $query = Strand::with('track'); //make $query a relationship
         return (new EloquentDataTable($query))
             ->addColumn('action', function(Strand $strand){
                 return view('components.edit-delete-buttons',[
