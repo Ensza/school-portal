@@ -25,14 +25,20 @@ class StrandsDataTable extends DataTable
         $query = Strand::with('track'); //make $query a relationship
         return (new EloquentDataTable($query))
             ->addColumn('action', function(Strand $strand){
+                $table_name = 'strands';
                 return view('components.edit-delete-buttons',[
-                    'row_id'=>$strand->id,'table_name'=>'tracks',
+                    'row_id'=>$strand->id,
+                    'table_name'=>$table_name,
                     'disabled'=>false,
+                    'tooltip_message'=>'',
+                    'edit_attr'=>'',
+                    'del_attr'=>'',
+                    'script'=>''
                 ]);
             })
             ->addColumn('track', '{{$track["code"]}}')
             ->setRowId(function(Strand $strand){
-                return "strand-id-$strand->id";
+                return "strands-id-$strand->id";
             });
     }
 
@@ -85,7 +91,8 @@ class StrandsDataTable extends DataTable
             Column::make('code')
                 ->title('Strand code'),
             Column::make('track')
-                ->name('track.code') //allows for searchable column with relationship
+                ->orderable(false)
+                ->name('track.code') //allows for searchable column from relationship
         ];
     }
 

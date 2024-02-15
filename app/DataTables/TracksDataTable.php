@@ -24,14 +24,23 @@ class TracksDataTable extends DataTable
         $query = Track::with('strands'); //make $query a relationship
         return (new EloquentDataTable($query))
             ->addColumn('action', function(Track $track){
+                $table_name = 'tracks';
                 return view('components.edit-delete-buttons',[
-                    'row_id'=>$track->id,'table_name'=>'tracks',
+                    'row_id'=>$track->id,
+                    'table_name'=>$table_name,
                     'disabled'=>$track->strands->count()>0 ? true : false,
+                    'tooltip_message'=>'Tracks with at least one strand under cannot be deleted',
+                    'edit_attr'=>'',
+                    'del_attr'=>'',
+                    'script'=>"
+                        tooltipTriggerList = $('.$table_name-delete-disabled');
+                        tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+                    "
                 ]);
             })
             ->addColumn('strands-count', '{{count($strands)}}') //return the strands count as content for column
             ->setRowId(function(Track $track){
-                return "track-id-$track->id";
+                return "tracks-id-$track->id";
             });
     }
 
@@ -81,9 +90,11 @@ class TracksDataTable extends DataTable
                 ->width(60)
                 ->addClass('text-center')
                 ->addClass('text-nowrap'),
-            Column::make('name')->title('Track name'),
-            Column::make('code')->title('Track code'),
-            Column::make('strands-count')
+            Column::make('name')
+                ->title('Track name'),
+            Column::make('code')
+                ->title('Track code'),
+            Column::computed('strands-count')
                 ->title('Strands #')
         ];
     }
