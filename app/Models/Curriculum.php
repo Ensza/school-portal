@@ -11,8 +11,12 @@ class Curriculum extends Model
 
     protected $fillable = [
         'name',
-        'grade',
+        'strand_id',
     ];
+
+    public function strand(){
+        return $this->belongsTo(Strand::class);
+    }
 
     public function subjects(){
         return $this->hasMany(Subject::class);

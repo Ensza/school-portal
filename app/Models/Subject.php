@@ -10,6 +10,11 @@ class Subject extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'curriculum_id'
+    ];
+
     public function curriculum(){
         return $this->belongsTo(Curriculum::class);
     } 

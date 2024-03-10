@@ -1,6 +1,10 @@
 <?php
 
+use App\FormMaker\FormMaker;
+use App\FormMaker\Input;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CurriculumControler;
+use App\Livewire\Admin\Classrooms\Classrooms;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -8,6 +12,12 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TrackController;
 use App\Http\Controllers\StrandController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\SubjectController;
+use App\Livewire\Admin\CreateTrack;
+use App\Livewire\Admin\CurriculaAndSubjects\CurriculaAndSubjects;
+use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\TracksAndStrands\TracksAndStrands;
+use GuzzleHttp\Psr7\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,50 +49,24 @@ Route::get('logout', function () {
     return redirect('/');
 });
 
-/////////////////////// dataTables /////////////////////
-
-Route::get('/tracks', [TrackController::class, 'dataTable'])->name('tracks.data')->middleware('admin');
-Route::get('/strands', [StrandController::class, 'dataTable'])->name('strands.data')->middleware('admin');
-
 ///////////////////////  Admin  ////////////////////////
 
 Route::middleware('admin')->group(function () {
 
-    Route::get('admin', function(){
-        return view('admin.dashboard');
-    });
-
-    Route::get('admin/tracks-and-strands', [AdminController::class, 'tracks_and_strands_view']);
-
-    //-----------------Tracks and Strands requests----------------//
-
-        Route::post('admin/tracks/create',[TrackController::class, 'create']);
-        Route::get('admin/tracks/edit-row',[TrackController::class, 'editRow']);
-        Route::get('admin/tracks/delete', [TrackController::class, 'delete']);
-
-        Route::post('admin/strands/create',[StrandController::class, 'create']);
-        Route::get('admin/strands/edit-row',[StrandController::class, 'editRow']);
-        Route::get('admin/strands/delete', [StrandController::class, 'delete']);
+    Route::get('admin', Dashboard::class)->name('dashboard');
+    Route::get('admin/tracks-and-strands', TracksAndStrands::class)->name('tracks-and-strands');
+    Route::get('admin/curricula-and-subjects', CurriculaAndSubjects::class)->name('curricula-and-subjects');
+    Route::get('admin/classrooms', Classrooms::class)->name('classrooms');
 
     //--------------------------------------------------------------------------------------------------------
+
 });
+
+/////////////////////////////////////////////////////////
 
 
 Route::get('test', function(){
-    $form = new FormController;
-    return $form->make(
-        'tracks', 
-        '/submit',
-        'POST',
-        'form',
-        [
-            'name'=>true
-        ],
-        [
-            'name'
-        ]
-    );
+    return view('test');
 });
-
 
 Auth::routes();

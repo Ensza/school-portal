@@ -3,54 +3,57 @@
         <x-resources/>
     </head>
     <body class="">
-        <div class="row min-vh-100 m-0" 
+        <div class="flex items-center h-screen m-0" 
         style="
             background-image: url(resources/img/background.jpg); 
             background-repeat: no-repeat; 
             background-position: center; 
             background-size: cover;
-            box-shadow: inset 0 0 0 2000px rgba(0,0,0,0.75);">
-            <div class="col-md-8 py-5 d-flex flex-column justify-content-center">
-                <h1 class="fw-bold text-light mx-5" style="font-size: 4em">Welcome to School Portal</h1>
-                <h2 class="text-light mx-5">School subtitle</h2>
-            </div>
-            <div class="col-md-4 p-3">
-                <div class="p-3 h-100 d-flex flex-column justify-content-center">
-                    <div class="card p-3">
-                        <h3>Login</h3>
-                        <form class="mt-3" action="" method="POST">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="username" name="username">
-                                <label for="username">Username</label>
-                            </div>
-                            <div class="form-floating">
-                                <input type="password" class="form-control" id="password" name="password">
-                                <label for="password">Password</label>
-                            </div>
-                            <label class="mt-2">
-                                <input type="checkbox" name="rememberme">
-                                <span>Remember me</span>
-                            </label>
-                            
-                            @csrf
-                            <div class="mt-3">
-                                <button class="btn btn-primary w-100" type="submit">LOGIN</button>
-                            </div>
-                        </form>
-                        <div class="">
-                            @if($errors->any())
-                                <div class="alert alert-warning" role="alert">
-                    
-                                @foreach ($errors->all() as $item) 
-                                    <span>{{$item}}</span>
-                                @endforeach
-
+            box-shadow: inset 0 0 0 2000px rgba(0,0,0,0.5);">
+            <div class="grid md:grid-flow-col grid-flow-row w-full p-1 lg:p-10">
+                <div class="py-5 flex flex-col lg:justify-center text-white">
+                    <h1 class="fw-bold text-light mx-5" style="font-size: 4em">Welcome to School Portal</h1>
+                    <h2 class="text-light mx-5">School subtitle</h2>
+                </div>
+                <div>
+                    <div class="p-3 h-full flex flex-col justify-center">
+                        <div class="border border-white border-opacity-30 text-white backdrop-blur-md rounded p-4 shadow">
+                            <h3 class="text-lg">Login</h3>
+                            <form class="mt-3" action="" method="POST">
+                                <div class="mb-3">
+                                    <input type="text" class="text-black w-full p-2 rounded border" id="username" name="username">
+                                    <label for="username" class="font-semibold">Username</label>
                                 </div>
-                            @endif
+                                <div class="mb-3">
+                                    <input type="password" class="text-black w-full p-2 rounded border" id="password" name="password">
+                                    <label for="password" class="font-semibold">Password</label>
+                                </div>
+                                <div class="flex items-center mb-4">
+                                    <input id="rememberme" type="checkbox" value="rememberme" name="rememberme" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="rememberme" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
+                                </div>
+                                
+                                @csrf
+                                <div class="mt-3">
+                                    <button class="transition rounded bg-blue-600 text-white py-2 px-3 hover:bg-blue-800" type="submit">LOGIN</button>
+                                </div>
+                            </form>
+                            <div class="">
+                                @if($errors->any())
+                                    <div class="p-3 border-red-400 bg-red-200 text-red-900 rounded" role="alert">
+                        
+                                    @foreach ($errors->all() as $item) 
+                                        <span class="w-full">{{$item}}</span>
+                                    @endforeach
+
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
         </div>
     </body>
 </html>

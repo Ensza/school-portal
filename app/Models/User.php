@@ -43,4 +43,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    // method for checking if the user is an administrator
+    public function isAdmin(){
+        if($this->role == "administrator"){
+            return true;
+        }
+
+        return false;
+    }
 }

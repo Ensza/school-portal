@@ -36,7 +36,7 @@ return [
     'pdf' => [
         'enabled' => true,
         //'binary'  => env('WKHTML_PDF_BINARY', '/usr/local/bin/wkhtmltopdf'),
-        'binary'  => "C:\\xampp\htdocs\school-portal\wkhtmltopdf.exe",
+        'binary'  => "E:\Programs\\xampp\htdocs\school-portal\wkhtmltopdf.exe",
         'timeout' => false,
         'options' => [],
         'env'     => [],
