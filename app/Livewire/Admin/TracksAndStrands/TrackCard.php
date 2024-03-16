@@ -42,7 +42,7 @@ class TrackCard extends Component
         $this->disabled = $track->strands->count() > 0 ? true : false;
     }
 
-    public function update(){
+    public function edit(){
         //validate first, return errors if validation fails
         $this->validate();
 
@@ -55,6 +55,13 @@ class TrackCard extends Component
         }
         
         $this->editing = false;
+    }
+
+    public function enableEdit(){
+        $this->name = $this->track->name;
+        $this->code = $this->track->code;
+
+        $this->editing = true;
     }
 
     public function delete(){

@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\Curriculum;
-use App\Models\Level;
-use App\Models\Strand;
+use App\Models\Classroom;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,11 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('classrooms', function (Blueprint $table) {
+        Schema::create('classroom_subjects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(Strand::class);
-            $table->foreignIdFor(Level::class);
+            $table->foreignIdFor(Classroom::class);
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('classrooms');
+        Schema::dropIfExists('classroom_subjects');
     }
 };

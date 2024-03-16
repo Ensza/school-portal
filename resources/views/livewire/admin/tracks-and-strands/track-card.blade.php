@@ -26,13 +26,13 @@
 
             @if($editing)
 
-            <button class="mx-2 text-green-600 transition scale-125 hover:scale-[1.6] track-edit-button" type="button" row-id="{{$track->id}}" wire:click="update" title="Confirm edit">
+            <button class="mx-2 text-green-600 transition scale-125 hover:scale-[1.6] track-edit-button" type="button" row-id="{{$track->id}}" wire:click="edit()" title="Confirm edit">
                 <i class="bi bi-check-lg"></i>
             </button>
 
             @else
             
-            <button class="mx-3 text-slate-800 transition hover:scale-110 track-edit-button" type="button" row-id="{{$track->id}}" wire:click="$toggle('editing')" title="Edit">
+            <button class="mx-3 text-slate-800 transition hover:scale-110 track-edit-button" type="button" row-id="{{$track->id}}" wire:click="enableEdit()" title="Edit">
                 <i class="bi bi-pencil-fill"></i>
             </button>
 

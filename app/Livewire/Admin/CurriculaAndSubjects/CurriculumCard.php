@@ -35,6 +35,13 @@ class CurriculumCard extends Component
         ];
     }
 
+    public function toggleEditing(){
+        $this->name = $this->curriculum->name;
+        $this->strand_id = $this->curriculum->strand_id;
+
+        $this->editing = true;
+    }
+
     // edit curriculum
     public function edit(){
         $this->validate();

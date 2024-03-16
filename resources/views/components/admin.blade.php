@@ -23,16 +23,40 @@
                 </div>
                 <div class="p-2 mt-3 text-md">
                     <div class="font-semibold grid gap-2">
-                        <a href="/admin" id="dashboard-link" type="button" class="flex w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" aria-current="true" wire:navigate>Dashboard</a>
-                        <a href="/admin/tracks-and-strands" id="tracks-and-strands-link" type="button" class="flex w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>Tracks and Strands</a>
-                        <a href="/admin/curricula-and-subjects" id="curricula-and-subjects-link" type="button" class="flex w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>Curricula and Subjects</a>
-                        <a href="/admin/classrooms" id="classrooms-link" type="button" class="flex w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>Classrooms</a>
+                        <a href="/admin" id="dashboard-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" aria-current="true" wire:navigate>
+                            <i class="bi bi-speedometer2"></i>
+                            Dashboard
+                        </a>
+                        <a href="/admin/tracks-and-strands" id="tracks-and-strands-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
+                            <i class="bi bi-mortarboard"></i>
+                            Tracks and Strands
+                        </a>
+                        <a href="/admin/curricula-and-subjects" id="curricula-and-subjects-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
+                            <i class="bi bi-book"></i>
+                            Curricula and Subjects
+                        </a>
+                        <a href="/admin/classrooms" id="classrooms-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
+                            <i class="bi bi-door-closed"></i>
+                            Classrooms
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
         <div id="overlay" class="w-full h-full absolute bg-black bg-opacity-30 hidden z-[3] transition ease-in-out"></div>
-        <button type="button" id="collapse-sidebar" class="transition lg:translate-x-[9em] flex items-center absolute z-[4] my-1 mx-2" style="font-size: 2em;"><i class="bi bi-list"></i></button>
+
+        {{-- Sidebar Collapse button --}}
+        <button type="button" id="collapse-sidebar" class="transition lg:translate-x-[9em] bg-opacity-30 flex items-center absolute z-[4] my-3 mx-2
+        bg-slate-50 rounded
+        "
+        style="font-size: 2em;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+          </svg>          
+          
+        </button>
+        {{--  --}}
+        
         <div id="main" class="w-full p-0 flex flex-col mh-full overflow-hidden relative bg-slate-50" style="z-index: 2;">
             <div class="w-full border-b p-2 flex shadow-sm bg-slate-50" style="min-width: 400px">
                 <div class="w-full flex md">

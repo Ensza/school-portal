@@ -18,22 +18,45 @@ namespace App\Models{
  * @property int $id
  * @property string $name
  * @property int $strand_id
- * @property int $curriculum_id
+ * @property int $level_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Curriculum|null $curriculum
+ * @property-read \App\Models\Level|null $level
  * @property-read \App\Models\Strand|null $strand
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ClassroomSubject> $subjects
+ * @property-read int|null $subjects_count
  * @method static \Illuminate\Database\Eloquent\Builder|Classroom newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Classroom newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Classroom query()
  * @method static \Illuminate\Database\Eloquent\Builder|Classroom whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Classroom whereCurriculumId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Classroom whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Classroom whereLevelId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Classroom whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Classroom whereStrandId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Classroom whereUpdatedAt($value)
  */
 	class Classroom extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
+ * @property int $classroom_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassroomSubject newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassroomSubject newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassroomSubject query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassroomSubject whereClassroomId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassroomSubject whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassroomSubject whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassroomSubject whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ClassroomSubject whereUpdatedAt($value)
+ */
+	class ClassroomSubject extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -69,6 +92,27 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|CurriculumSubject query()
  */
 	class CurriculumSubject extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Classroom> $classrooms
+ * @property-read int|null $classrooms_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Level newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Level newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Level query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Level whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Level whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Level whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Level whereUpdatedAt($value)
+ */
+	class Level extends \Eloquent {}
 }
 
 namespace App\Models{

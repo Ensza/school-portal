@@ -34,7 +34,7 @@ class StrandRow extends Component
         $this->code = $this->strand->code;
     }
 
-    public function updateRow(){
+    public function edit(){
         //validate first, return errors if validation fails
         $this->validate();
 
@@ -49,7 +49,14 @@ class StrandRow extends Component
         $this->editing = false;
     }
 
-    public function deleteRow(){
+    public function enableEdit(){
+        $this->name = $this->strand->name;
+        $this->code = $this->strand->code;
+        
+        $this->editing = true;
+    }
+
+    public function delete(){
         if(Auth::user()->isAdmin()){
             Curriculum::where('strand_id', $this->strand->id)->delete();
             // check first if the instance of the model exists in the database

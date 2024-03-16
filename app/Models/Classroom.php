@@ -11,15 +11,19 @@ class Classroom extends Model
     protected $fillable = [
         'name',
         'strand_id',
-        'curriculum_id',
+        'level_id',
     ];
 
-    public function curriculum(){
-        return $this->belongsTo(Curriculum::class);
+    public function level(){
+        return $this->belongsTo(Level::class);
     }
 
     public function strand(){
         return $this->belongsTo(Strand::class);
+    }
+
+    public function subjects(){
+        return $this->hasMany(ClassroomSubject::class);
     }
 
     use HasFactory;
