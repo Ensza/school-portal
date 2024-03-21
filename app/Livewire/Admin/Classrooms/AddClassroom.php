@@ -39,7 +39,7 @@ class AddClassroom extends Component
     }
     
     public function addCurriculumSubjectsToNewClass(){
-        if($this->curriculum_id){
+        if(Curriculum::find($this->curriculum_id)){
             $subjects = Curriculum::find($this->curriculum_id)->subjects;
 
             foreach($subjects as $subject){

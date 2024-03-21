@@ -1,6 +1,6 @@
 <div class="w-full top-0 left-0 z-10 overflow-auto py-4">
     
-    <div class="w-full lg:mx-auto rounded p-2 relative min-w-[300px] border border-slate-50">
+    <div class="w-full lg:mx-auto rounded p-2 relative min-w-[300px] border-2 border-dashed">
         <button class="absolute top-0 right-0 text-white me-1 mt-1" wire:click="$parent.closeAddClassroom()">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -55,16 +55,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $subject_index = 0;
-                            @endphp
+
                             @foreach ($subjects as $subject)
         
                             <tr class="bg-white border-b">
                                 <td scope="col" class="px-6 py-2">
                                     <div class="flex items-center">
                                         <span class="w-full">{{$subject}}</span>
-                                        <button class="text-red-500" title="remove subject" wire:click="removeSubject({{$subject_index}})">
+                                        <button class="text-red-500" title="remove subject" wire:click="removeSubject({{$loop->index}})">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                           </svg>
@@ -72,9 +70,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            @php
-                                $subject_index++;
-                            @endphp
+
                             @endforeach
                             
                             <tr class="bg-white border-b">

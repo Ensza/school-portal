@@ -7,9 +7,9 @@
         flex-wrap 
         justify-center 
         bg-slate-200 
-        aria-selected:bg-blue-200 
-        aria-selected:border-2
-        aria-selected:border-blue-600
+        aria-selected:bg-blue-600
+        aria-selected:text-blue-50
+        aria-selected:border-blue-700
         text-slate-600 shadow hover:scale-[1.02] 
         hover:bg-slate-300 transition"
         @if ($selected) aria-selected="true" @endif>

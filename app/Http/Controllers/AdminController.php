@@ -15,7 +15,7 @@ class AdminController extends Controller
     }
 
     public function tracksAndStrandsView(){
-        return view('admin.tracks-and-strands');
+        return view('livewire\admin\tracks-and-strands\tracks-and-strands-volt');
     }
 
     public function curriculaAndSubjectsView(){
