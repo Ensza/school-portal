@@ -1,23 +1,12 @@
 <?php
 
-use App\FormMaker\FormMaker;
-use App\FormMaker\Input;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CurriculumControler;
 use App\Livewire\Admin\Classrooms\Classrooms;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\TrackController;
-use App\Http\Controllers\StrandController;
-use App\Http\Controllers\FormController;
-use App\Http\Controllers\SubjectController;
-use App\Livewire\Admin\CreateTrack;
 use App\Livewire\Admin\CurriculaAndSubjects\CurriculaAndSubjects;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\TracksAndStrands\TracksAndStrands;
-use GuzzleHttp\Psr7\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +38,10 @@ Route::get('logout', function () {
     return redirect('/');
 });
 
+Route::get('register', function () {
+    return view('register');
+});
+
 ///////////////////////  Admin  ////////////////////////
 
 Route::middleware('admin')->group(function () {
@@ -68,5 +61,3 @@ Route::middleware('admin')->group(function () {
 Route::get('test', function(){
     return view('test');
 });
-
-Auth::routes();

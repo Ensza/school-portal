@@ -30,6 +30,8 @@
                             class="w-4 h-4 border rounded border-white accent-blue-500 focus:ring-1 ring-blue-500 ring-offset-1" 
                             wire:click="$toggle('remember_me')">
                             <label for="rememberme" class="ms-2 text-sm font-medium text-gray-300">Remember me</label>
+
+                            <a href="register" class="ms-auto text-sm text-slate-200 hover:text-blue-400">Don't have an account?</a>
                         </div>
                         
                         @csrf
