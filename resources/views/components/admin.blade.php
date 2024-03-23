@@ -19,7 +19,7 @@
         <div id="sidebar" class="p-0 z-[4] bg-slate-900 text-white h-screen absolute transition-all ease-in-out w-[18em] min-w-[18em] -translate-x-[18em] lg:translate-x-0 lg:relative lg:block overflow-hidden" state="wide">
             <div style="min-width: 18em;">
                 <div class="border-b border-slate-400 text-light p-5">
-                    <h2 class="text-lg">{{env('SCHOOL_NAME')}}</h2>
+                    <h2 class="text-lg">{{config('variables.school_name')}}</h2>
                 </div>
                 <div class="p-2 mt-3 text-md">
                     <div class="font-semibold grid gap-2">

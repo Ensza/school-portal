@@ -13,9 +13,9 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // seed admin user
         User::create([
-            'email'=>env('ADMIN_EMAIL'),
-            'username'=>'admin',
+            'email'=>config('variables.admin_email'),
             'password'=>'admin',
             'role'=>'administrator'
         ]);

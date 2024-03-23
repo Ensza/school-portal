@@ -7,25 +7,25 @@ use Livewire\Component;
 
 class Login extends Component
 {
-    public $username = '';
+    public $email = '';
     public $password = '';
     public $remember_me=false;
 
     public function login(){
         $this->validate([
-            'username' => ['required'],
+            'email' => ['required'],
             'password' => ['required'],
         ]);
 
         if (Auth::attempt([
-            'username'=> $this->username,
+            'email'=> $this->email,
             'password'=> $this->password,
         ], $this->remember_me)) {
             request()->session()->regenerate();
  
             return redirect('/');
         }else{
-            $this->addError('login', 'Username or Password is incorrect');
+            $this->addError('login', 'Email or Password is incorrect');
         }
     }
     public function render()

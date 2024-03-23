@@ -10,16 +10,17 @@
         "autoprefixer": "^10.4.17",
         "axios": "^1.6.1",
         "bootstrap": "^5.2.3",
+        "bootstrap-icons": "^1.11.3",
         "flowbite": "^2.3.0",
         "jquery": "^3.7.1",
         "laravel-vite-plugin": "^1.0.0",
         "postcss": "^8.4.35",
         "sass": "^1.56.1",
         "tailwindcss": "^3.4.1",
-        "vite": "^5.0.0",
-        "bootstrap-icons": "^1.11.3"
+        "vite": "^5.0.0"
     },
     "dependencies": {
-        "bootstrap-icons": "^1.11.3"
+        "bootstrap-icons": "^1.11.3",
+        "flowbite-datepicker": "^1.2.6"
     }
 }
