@@ -7,6 +7,8 @@ use App\Http\Controllers\LoginController;
 use App\Livewire\Admin\CurriculaAndSubjects\CurriculaAndSubjects;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\TracksAndStrands\TracksAndStrands;
+use App\Livewire\Student\Classrooms\Classrooms as StudentClassrooms;
+use App\Livewire\Student\Classrooms\MyClassroom;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +23,14 @@ use App\Livewire\Admin\TracksAndStrands\TracksAndStrands;
 
 Route::get('/', function () {
     if(Auth::check()){
-        if(Auth::user()->role == "administrator"){
+        if(Auth::user()->isAdmin()){
+
             return redirect('admin');
+
+        }elseif(Auth::user()->isStudent()){
+
+            return redirect()->route('student.classrooms');
+            
         }
     }
     
@@ -50,6 +58,23 @@ Route::middleware('admin')->group(function () {
     Route::get('admin/tracks-and-strands', TracksAndStrands::class)->name('tracks-and-strands');
     Route::get('admin/curricula-and-subjects', CurriculaAndSubjects::class)->name('curricula-and-subjects');
     Route::get('admin/classrooms', Classrooms::class)->name('classrooms');
+
+    //--------------------------------------------------------------------------------------------------------
+
+});
+
+/////////////////////////////////////////////////////////
+
+
+///////////////////////  student  ////////////////////////
+
+Route::middleware('student')->group(function () {
+
+    Route::get('student', function(){
+        return redirect()->route('student.my-classroom');
+    });
+    Route::get('student/classrooms', StudentClassrooms::class)->name('student.classrooms');
+    Route::get('student/classrooms/my-classroom', MyClassroom::class)->name('student.my-classroom');
 
     //--------------------------------------------------------------------------------------------------------
 

@@ -1,7 +1,13 @@
 @if (auth()->user()->isAdmin())
 
-<x-admin>
+<x-layouts.admin>
     {{$slot}}
-</x-admin>
+</x-layouts.admin>
+
+@elseif (auth()->user()->isStudent())
+
+<x-layouts.student>
+    {{$slot}}
+</x-layouts.student>
     
 @endif

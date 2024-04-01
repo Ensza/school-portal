@@ -8,7 +8,7 @@
         </button>
 
         <h2 class="text-2xl mb-2 text-white">{{$classroom->name}}</h2>
-        <div class="lg:inline-flex gap-2 w-full">
+        <div class="gap-2 w-full">
             <div class="w-full mb-2 text-white">
                 
                 <div class="flex flex-col">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-                <div class="my-4 rounded-full overflow-clip inline-flex transition hover:scale-[103%] shadow hover:shadow-lg cursor-pointer" wire:click="$set('selected_tab','students')">
+                <div class="my-4 rounded-full overflow-clip inline-flex transition hover:scale-[103%] shadow hover:shadow-lg cursor-pointer">
                     <div class="text-nowrap bg-blue-500 w-full flex justify-center items-center py-2 px-5">
                         <div class="flex gap-2">
                             <div class="flex items-center">
@@ -92,23 +92,23 @@
 
             </div>
     
-            <div class="w-full">
+            <div class="w-full" x-data="{show_tab : 'subjects'}">
                 <div class="block rounded bg-white p-2">
                     <div class="block mb-2">
                         <table class="w-full">
                             <thead>
                                 <tr class="h-10 border-b">
                                     <td class="px-2 text-center hover:bg-slate-100 group/tab cursor-pointer" 
-                                    @if($selected_tab == 'subjects') aria-selected="true" @endif 
-                                    wire:click="$set('selected_tab','subjects')">
+                                    x-bind:aria-selected="show_tab == 'subjects'"
+                                    x-on:click="show_tab = 'subjects'">
                                         <div>
                                             <span class="mx-3 mb-2 block group-aria-selected/tab:text-blue-500"><i class="bi bi-book"></i> Subjects</span>
                                             <div class="h-[3px] group-aria-selected/tab:bg-blue-500"></div>
                                         </div>
                                     </td>
                                     <td class="px-2 text-center hover:bg-slate-100 group/tab cursor-pointer" 
-                                    @if($selected_tab == 'students') aria-selected="true" @endif 
-                                    wire:click="$set('selected_tab','students')">
+                                    x-bind:aria-selected="show_tab == 'students'"
+                                    x-on:click="show_tab = 'students'">
                                         <div>
                                             <span class="mx-3 mb-2 block group-aria-selected/tab:text-blue-500" ><i class="bi bi-people"></i> Students</span>
                                             <div class="h-[3px] group-aria-selected/tab:bg-blue-500"></div>
@@ -119,7 +119,7 @@
                         </table>
                     </div>
 
-                    <div class="hidden aria-[tab-selected]:block" @if($selected_tab == 'subjects') aria-tab-selected="true" @endif>
+                    <div class="hidden aria-[tab-selected]:block" x-bind:aria-tab-selected="show_tab == 'subjects'">
                         <h3 class="text-xl mb-2">Subjects</h3>
                         <table class="w-full border rounded text-sm text-left rtl:text-right text-gray-500">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -201,7 +201,7 @@
                                 <tbody>
                                     @foreach ($selected_curriculum->subjects as $subject)
                 
-                                    <tr class="bg-white border-b">
+                                    <tr class="bg-slate-300 border-b">
                                         <td scope="col" class="px-6 py-3">{{$subject->name}}</td>
                                     </tr>
                                         
@@ -212,6 +212,272 @@
                         </div>
                         
                         @endif
+                    </div>
+
+                    <div class="hidden aria-[tab-selected]:block" x-bind:aria-tab-selected="show_tab == 'students'">
+                        <h3 class="text-xl mb-2">Students</h3>
+
+                        {{-- admitted students --}}
+                        <div class="block my-8">
+                            <div class="my-2">Admitted students</div>
+                            <div class="">
+                                <div class="inline-flex gap-2 items-center text-sm">
+                                    Search
+                                    <input type="text" wire:model="search_students" wire:keyup="filterStudents()"
+                                    class="rounded border py-1 px-2 outline-slate-500">
+                                </div>
+                            </div>
+                            <div class="block p-2">
+                                <div class="w-full grid grid-cols-4 lg:grid-cols-6 rounded-full shadow p-2 my-2 bg-slate-600 text-slate-50 text-sm font-bold px-4 gap-2">
+                                    <div class="col-span-3 md:col-span-1 lg:hidden inline-flex" wire:click="sortStudents('name')">
+                                        Name 
+                                        @if ($sort_students_by == 'name')
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                        </svg>
+                                        @endif
+                                    </div>
+                                    <div class="hidden lg:inline-flex cursor-pointer" wire:click="sortStudents('last_name')">
+                                        Last name 
+                                        @if ($sort_students_by == 'last_name')
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                        </svg>
+                                        @endif
+                                    </div>
+                                    <div class="hidden lg:inline-flex cursor-pointer" wire:click="sortStudents('first_name')">
+                                        First name 
+                                        @if ($sort_students_by == 'first_name')
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                        </svg>
+                                        @endif
+                                    </div>
+                                    <div class="hidden lg:inline-flex cursor-pointer" wire:click="sortStudents('middle_name')">
+                                        Middle name 
+                                        @if ($sort_students_by == 'middle_name')
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                        </svg>
+                                        @endif
+                                    </div>
+                                    <div class="hidden md:inline-flex col-span-2 cursor-pointer" wire:click="sortStudents('email')">
+                                        Email 
+                                        @if ($sort_students_by == 'email')
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                        </svg>
+                                        @endif
+                                    </div>
+                                    <div>
+                                        Action
+                                    </div>
+                                </div>
+                                @foreach ($students as $student)
+                
+                                <div x-data="{expanded: false}" x-on:click="expanded =! expanded"
+                                class="w-full grid grid-cols-4 lg:grid-cols-6 rounded-[30px] bg-slate-100 hover:bg-slate-200 cursor-pointer shadow py-2 my-2 text-sm px-4 gap-x-2">
+                                    <div class="col-span-3 md:col-span-1 lg:hidden">
+                                        {{$student->first_name.' '.$student->middle_name.' '.$student->last_name}}
+                                    </div>
+                                    <div class="hidden lg:block">
+                                        {{$student->last_name}}
+                                    </div>
+                                    <div class="hidden lg:block">
+                                        {{$student->first_name}}
+                                    </div>
+                                    <div class="hidden lg:block">
+                                        {{$student->middle_name}}
+                                    </div>
+                                    <div class="hidden md:block col-span-2">
+                                        {{$student->user->email}}
+                                    </div>
+                                    <div>
+                                        a
+                                    </div>
+
+                                    <div class="col-span-full max-h-0 overflow-clip transition-all aria-expanded:block aria-expanded:max-h-[1000px]" x-bind:aria-expanded="expanded">
+                                        <div x-on:click.stop x-on:hover.stop
+                                        class="p-2 w-full border rounded-lg shadow-inner bg-white cursor-auto mt-5 mb-2">
+                                            <div class="text-lg py-10 px-4 rounded bg-blue-500 text-white">{{$student->last_name.', '.$student->first_name.' '.$student->middle_name}}</div>
+                                            
+                                            <div class="lg:w-3/4 mx-auto my-8">
+                                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+                                                    <div class="mt-1 col-start-1 text-lg">Student information</div>
+                                                    <label for="" class="text-slate-500 col-start-1">Email</label>
+                                                    <div class="mb-3">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->user->email}}" readonly>
+                                                    </div>
+
+                                                    <label for="" class="text-slate-500 col-start-1">Last name</label>
+                                                    <div class="mb-1">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->last_name}}" readonly>
+                                                    </div>
+
+                                                    <label for="" class="text-slate-500 col-start-1">First name</label>
+                                                    <div class="mb-1">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->first_name}}" readonly>
+                                                    </div>
+
+                                                    <label for="" class="text-slate-500 col-start-1">Middle name</label>
+                                                    <div class="mb-3">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->middle_name}}" readonly>
+                                                    </div>
+
+                                                    <label for="" class="text-slate-500 col-start-1">Birthday</label>
+                                                    <div class="mb-3">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{date_format($student->birthday,"F d, Y")}}" readonly>
+                                                    </div>
+                                                    
+                                                    <div class="mt-1 col-start-1 text-lg">Address</div>
+                                                    <label for="" class="text-slate-500 col-start-1">House and Street</label>
+                                                    <div class="mb-1">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->house_and_street}}" readonly>
+                                                    </div>
+
+                                                    <label for="" class="text-slate-500">City / Municipality</label>
+                                                    <div class="mb-1">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->city_or_municipality}}" readonly>
+                                                    </div>
+
+                                                    <label for="" class="text-slate-500">Province</label>
+                                                    <div class="mb-1">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->province}}" readonly>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-span-full flex justify-center pt-1">
+                                        <div class="transition aria-expanded:rotate-180" x-bind:aria-expanded="expanded">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                            </svg>                                          
+                                        </div>                                 
+                                    </div>
+                                </div>
+
+                                @endforeach
+                            </div>
+                        </div>
+
+                        {{-- pending students --}}
+                        <div class="block my-8">
+                            <div class="my-2">Pending admissions</div>
+                            <div class="text-sm text-orange-500 inline-flex gap-2 items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                                </svg>
+                                Please make sure the email of the student is correct before admitting a student
+                            </div>
+                            
+                            <div class="block p-2">
+                                <div class="w-full grid grid-cols-6 rounded-full shadow p-2 my-2 bg-slate-600 text-slate-50 text-sm font-bold px-4 gap-2">
+                                    <div class="hidden md:inline-flex lg:hidden col-span-2 cursor-pointer" wire:click="sortPendingStudents('name')">
+                                        Name 
+                                        @if ($sort_pending_students_by == 'name')
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                        </svg>
+                                        @endif
+                                    </div>
+                                    <div class="hidden lg:inline-flex cursor-pointer" wire:click="sortPendingStudents('first_name')">
+                                        First name 
+                                        @if ($sort_pending_students_by == 'first_name')
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                        </svg>
+                                        @endif
+                                    </div>
+                                    <div class="hidden lg:inline-flex cursor-pointer" wire:click="sortPendingStudents('middle_name')">
+                                        Middle name 
+                                        @if ($sort_pending_students_by == 'middle_name')
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                        </svg>
+                                        @endif
+                                    </div>
+                                    <div class="hidden lg:inline-flex cursor-pointer" wire:click="sortPendingStudents('last_name')">
+                                        Last name 
+                                        @if ($sort_pending_students_by == 'last_name')
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                        </svg>
+                                        @endif
+                                    </div>
+                                    <div class="col-span-4 md:col-span-2 inline-flex cursor-pointer" wire:click="sortPendingStudents('email')">
+                                        Email 
+                                        @if ($sort_pending_students_by == 'email')
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                        </svg>
+                                        @endif
+                                    </div>
+                                    <div class="text-center col-span-2 lg:col-span-1">
+                                        Action
+                                    </div>
+                                </div>
+                                @foreach ($pending_students as $student)
+                
+                                <div x-data="{expanded: false}" x-on:click="expanded =! expanded"
+                                class="w-full grid grid-cols-6 rounded-[30px] bg-slate-100 hover:bg-slate-200 cursor-pointer shadow py-2 my-2 text-sm px-4 gap-x-2">
+                                    <div class="hidden md:block lg:hidden col-span-2">
+                                        {{$student->first_name.' '.$student->middle_name.' '.$student->last_name}}
+                                    </div>
+                                    <div class="hidden lg:block">
+                                        {{$student->first_name}}
+                                    </div>
+                                    <div class="hidden lg:block">
+                                        {{$student->middle_name}}
+                                    </div>
+                                    <div class="hidden lg:block">
+                                        {{$student->last_name}}
+                                    </div>
+                                    <div class="col-span-4 md:col-span-2">
+                                        {{$student->user->email}}
+                                    </div>
+                                    <div class="inline-flex justify-center gap-2 col-span-2 lg:col-span-1" x-on:click.stop>
+                                        <button wire:click="admit({{$student->id}})" wire:confirm="Are you sure you want to admit this student?"
+                                        class="rounded text-white bg-green-500 hover:bg-green-600 py-1 px-2 text-sm">
+                                            Admit
+                                        </button>
+                                        <button class="rounded text-white bg-red-500 hover:bg-red-600 py-1 px-2 text-sm">
+                                            Reject
+                                        </button>
+                                    </div>
+
+                                    <div class="col-span-full flex justify-center pt-1">
+                                        <div class="transition aria-expanded:rotate-180" x-bind:aria-expanded="expanded">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                            </svg>                                          
+                                        </div>                                 
+                                    </div>
+                                    <div class="col-span-full max-h-0 overflow-clip transition-all aria-expanded:block aria-expanded:max-h-[1000px]" x-bind:aria-expanded="expanded">
+                                        <div x-on:click.stop x-on:hover.stop
+                                        class="p-2 w-full border-t border-slate-300 cursor-auto mt-2">
+                                            aw <br>
+                                            aw <br>
+                                            aw <br>
+                                            aw <br>
+                                            aw <br>
+                                            aw <br>
+                                            aw <br>
+                                            aw <br>
+                                            aw <br>
+                                            aw <br>
+                                            aw <br>
+                                            aw <br>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @endforeach
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
 

@@ -16,71 +16,91 @@
     </head>
     <body class="flex text-slate-600">
 
-        <div id="sidebar" class="p-0 z-[4] bg-slate-900 text-white h-screen absolute transition-all ease-in-out w-[18em] min-w-[18em] -translate-x-[18em] lg:translate-x-0 lg:relative lg:block overflow-hidden" state="wide">
-            <div style="min-width: 18em;">
-                <div class="border-b border-slate-400 text-light p-5">
-                    <h2 class="text-lg">{{config('variables.school_name')}}</h2>
-                </div>
-                <div class="p-2 mt-3 text-md">
-                    <div class="font-semibold grid gap-2">
-                        <a href="/admin" id="dashboard-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" aria-current="true" wire:navigate>
-                            <i class="bi bi-speedometer2"></i>
-                            Dashboard
-                        </a>
-                        <a href="/admin/tracks-and-strands" id="tracks-and-strands-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
-                            <i class="bi bi-mortarboard"></i>
-                            Tracks and Strands
-                        </a>
-                        <a href="/admin/curricula-and-subjects" id="curricula-and-subjects-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
-                            <i class="bi bi-book"></i>
-                            Curricula and Subjects
-                        </a>
-                        <a href="/admin/classrooms" id="classrooms-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
-                            <i class="bi bi-door-closed"></i>
-                            Classrooms
-                        </a>
+        <div 
+        x-data="{
+            show_sidebar : (window.innerWidth < 768 ? false : true)
+        }" >
+            <div id="sidebar" 
+            x-bind:data-show="show_sidebar ? 'true' : 'false'"
+            class="p-0 z-[4] bg-slate-900 text-white h-screen absolute transition-all ease-in-out w-[18em] min-w-[18em]
+            data-[show=false]:-translate-x-[18em]
+            data-[show=true]:lg:relative 
+            lg:block" state="wide">
+                <div style="min-width: 18em;">
+                    <div class="border-b border-slate-400 text-light p-5">
+                        <h2 class="text-lg">{{config('variables.school_name')}}</h2>
+                    </div>
+                    <div class="p-2 mt-3 text-md">
+                        <div class="font-semibold grid gap-2">
+                            <a href="/admin" id="dashboard-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" aria-current="true" wire:navigate>
+                                <i class="bi bi-speedometer2"></i>
+                                Dashboard
+                            </a>
+                            <a href="/admin/tracks-and-strands" id="tracks-and-strands-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
+                                <i class="bi bi-mortarboard"></i>
+                                Tracks and Strands
+                            </a>
+                            <a href="/admin/curricula-and-subjects" id="curricula-and-subjects-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
+                                <i class="bi bi-book"></i>
+                                Curricula and Subjects
+                            </a>
+                            <a href="/admin/classrooms" id="classrooms-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
+                                <i class="bi bi-door-closed"></i>
+                                Classrooms
+                            </a>
+                        </div>
                     </div>
                 </div>
+                {{-- Sidebar Collapse button --}}
+                <button type="button" id="collapse-sidebar" x-on:click="show_sidebar =! show_sidebar" x-bind:data-sidebar="show_sidebar ? 'true' : 'false'"
+                class="transition 
+                top-0 right-[-50px] text-slate-500
+                bg-opacity-30 
+                flex items-center 
+                absolute z-[10] my-3 mx-2
+                rounded
+                "
+                style="font-size: 2em;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+                </svg>          
+                
+                </button>
+                {{--  --}}
             </div>
-        </div>
-        <div id="overlay" class="w-full h-full absolute bg-black bg-opacity-30 hidden z-[3] transition ease-in-out"></div>
 
-        {{-- Sidebar Collapse button --}}
-        <button type="button" id="collapse-sidebar" class="transition lg:translate-x-[9em] bg-opacity-30 flex items-center absolute z-[4] my-3 mx-2
-        bg-slate-50 rounded
-        "
-        style="font-size: 2em;">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
-          </svg>          
-          
-        </button>
-        {{--  --}}
+            <div id="overlay" :class="show_sidebar || 'hidden'" x-on:click="show_sidebar = false"
+            class="w-full h-full left-0 top-0 absolute lg:hidden bg-black bg-opacity-30 z-[3] transition ease-in-out"></div>
+        </div>
         
         <div id="main" class="w-full p-0 flex flex-col mh-full overflow-hidden relative bg-slate-50" style="z-index: 2;">
             <div class="w-full border-b p-2 flex shadow-sm bg-slate-50" style="min-width: 400px">
                 <div class="w-full flex md">
                     
                 </div>
-                <button id="profile" class="text-slate-600 me-3 py-1 ps-2 pe-6 flex align-middle rounded-full hover:bg-slate-200" type="button">
-                    <img id="profile-image" src="\resources\img\f.png" class="border me-2 border-slate-400 rounded-full" alt="" style="height: 30px; width: 30px">
-                    <span id="profile-name" class="m-auto text-light text-nowrap" style="user-select: none;">
-                        Admin
-                        <span class=""><i class="bi bi-caret-down-fill"></i></span>
-                    </span>
-                </button>
+                <div x-data="{show_profile : false}">
+                    <button id="profile" x-on:click="show_profile =! show_profile"
+                    class="text-slate-600 me-3 py-1 ps-2 pe-6 flex align-middle rounded-full hover:bg-slate-200" type="button">
+                        <img id="profile-image" src="\resources\img\f.png" class="border me-2 border-slate-400 rounded-full" alt="" style="height: 30px; width: 30px">
+                        <span id="profile-name" class="m-auto text-light text-nowrap" style="user-select: none;">
+                            Admin
+                            <span class=""><i class="bi bi-caret-down-fill"></i></span>
+                        </span>
+                    </button>
+                    <div id="profile-panel" :class="show_profile || 'hidden'"
+                    class="absolute me-4 shadow-lg end-0 rounded-md border mt-2" style="min-width: 10em; z-index: 10">
+                        <button class="w-full rounded-t bg-white py-1 hover:bg-slate-100">
+                            Logout
+                        </button>
+                        <a href="/logout" type="button" class="w-full text-center rounded-b text-white py-1 bg-red-500 hover:bg-red-700">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+                
             </div>
 
             <div id="content" class="overflow-auto" style="min-width: 300px;">
-                <div id="profile-panel" class="absolute me-4 shadow-lg end-0 rounded-md hidden border" style="min-width: 10em; z-index: 10">
-                    <button class="w-full rounded-t bg-white py-1 hover:bg-slate-100">
-                        Logout
-                    </button>
-                    <a href="/logout" type="button" class="w-full text-center rounded-b text-white py-1 bg-red-500 hover:bg-red-700">
-                        Logout
-                    </a>
-                </div>
-
                 
                 <div class="p-2 py-3">
                     {{$slot}}
@@ -90,65 +110,7 @@
             </div>
         </div>
         <script type="module">
-            $(document).ready(function(){
-
-                // animation for sidebar collapse and expand
-
-                $('#collapse-sidebar').on('click',function(){
-                    if($(window).width()>1024){
-                        $('#sidebar').toggleClass('min-w-0').toggleClass('w-0').toggleClass('min-w-[18em]').toggleClass('w-[18em]');
-                        $('#collapse-sidebar').toggleClass('lg:translate-x-[9em]');
-                    }else{
-                        $('#overlay').toggleClass('hidden');
-                        $('#sidebar').toggleClass('-translate-x-[18em]');
-                        $(this).toggleClass('translate-x-[9em]');
-                    }
-
-                });
-
-                $('#overlay').on('click', function(){
-                    if($(window).width()>1024){
-                        $('#sidebar').toggleClass('min-w-0').toggleClass('w-0').toggleClass('min-w-[18em]').toggleClass('w-[18em]');
-                        $('#collapse-sidebar').toggleClass('lg:translate-x-[9em]');
-                    }else{
-                        $('#overlay').toggleClass('hidden');
-                        $('#sidebar').toggleClass('-translate-x-[18em]');
-                        $('#collapse-sidebar').toggleClass('translate-x-[9em]');
-                    }
-                });
-
-                $(window).on('resize', function(){
-                    if(!$('#sidebar').hasClass('-translate-x-[18em]')){
-                        $('#sidebar').addClass('-translate-x-[18em]');
-                        $('#collapse-sidebar').removeClass('translate-x-[9em]');
-                        $('#overlay').addClass('hidden');
-                    }
-
-                    if(!$('#collapse-sidebar').hasClass('lg:translate-x-[9em]')){
-                        $('#sidebar').removeClass('min-w-0').removeClass('w-0').addClass('min-w-[18em]').addClass('w-[18em]');
-                        $('#collapse-sidebar').addClass('lg:translate-x-[9em]');
-                    }
-
-                });
-
-                $("#profile").on("click", function() {
-                    $("#profile-panel").toggleClass("hidden");
-                });
-
-                $(document).mouseup(function(e) {
-
-                    if (!$("#profile-panel").is(e.target) 
-                        && $("#profile-panel").has(e.target).length === 0
-                        && !$("#profile").is(e.target) 
-                        && !$("#profile-image").is(e.target) 
-                        && !$("#profile-name").is(e.target) 
-                    ) 
-                    {
-                        $("#profile-panel").addClass("hidden");
-                    }
-                });
-            });
-            </script>
+        </script>
             
     </body>
 </html>

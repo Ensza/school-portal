@@ -19,7 +19,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'email',
-        'username',
         'password',
         'role'
     ];
@@ -52,5 +51,18 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    // method for checking if the user is a student
+    public function isStudent(){
+        if($this->role == "student"){
+            return true;
+        }
+
+        return false;
+    }
+
+    public function profile(){
+        return $this->hasOne(Profile::class);
     }
 }

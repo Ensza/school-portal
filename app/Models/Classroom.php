@@ -26,5 +26,9 @@ class Classroom extends Model
         return $this->hasMany(ClassroomSubject::class);
     }
 
+    public function students(){
+        return $this->hasMany(Profile::class);
+    }
+
     use HasFactory;
 }

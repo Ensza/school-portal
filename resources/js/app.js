@@ -8,3 +8,4 @@ import jQuery from 'jquery';
 window.$ = jQuery;
 
 import 'flowbite';
+import { initFlowbite } from 'flowbite';

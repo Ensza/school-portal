@@ -1,5 +1,5 @@
 <div class="curriculum" row-id="{{$curriculum->id}}">
-    <div class="p-1 rounded-lg bg-slate-200 border relative">
+    <div class="p-1 rounded-lg bg-slate-200 shadow border relative">
         @if ($editing)
 
         <div class="mb-2 p-2 flex">
