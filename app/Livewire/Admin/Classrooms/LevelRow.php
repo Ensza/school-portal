@@ -84,6 +84,14 @@ class LevelRow extends Component
         $this->creating_classroom = false;
     }
     
+    #[On('classroom-created')]
+    public function classroomCreated($id){
+        $this->selected_classroom = Classroom::find( $id );
+        $this->creating_classroom = false;
+        $this->sort_by = 'id';
+        $this->sortClassrooms();
+    }
+    
     #[On('classroom-updated')]
     public function render()
     {

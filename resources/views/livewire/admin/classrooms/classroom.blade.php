@@ -223,7 +223,7 @@
                             <div class="">
                                 <div class="inline-flex gap-2 items-center text-sm">
                                     Search
-                                    <input type="text" wire:model="search_students" wire:keyup="filterStudents()"
+                                    <input type="text" wire:keyup="filterStudents($event.target.value)"
                                     class="rounded border py-1 px-2 outline-slate-500">
                                 </div>
                             </div>
@@ -273,6 +273,14 @@
                                         Action
                                     </div>
                                 </div>
+                                @if ($students->count()<1)
+                                    <div class="inline-flex w-full justify-center items-center gap-2 p-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                                        </svg>
+                                        <span class="text-lg">There's nothing here</span>
+                                    </div>
+                                @endif
                                 @foreach ($students as $student)
                 
                                 <div x-data="{expanded: false}" x-on:click="expanded =! expanded"
@@ -299,50 +307,55 @@
                                     <div class="col-span-full max-h-0 overflow-clip transition-all aria-expanded:block aria-expanded:max-h-[1000px]" x-bind:aria-expanded="expanded">
                                         <div x-on:click.stop x-on:hover.stop
                                         class="p-2 w-full border rounded-lg shadow-inner bg-white cursor-auto mt-5 mb-2">
-                                            <div class="text-lg py-10 px-4 rounded bg-blue-500 text-white">{{$student->last_name.', '.$student->first_name.' '.$student->middle_name}}</div>
+                                            <div class="text-lg p-2 w-full rounded flex justify-center bg-blue-500 text-white">
+                                                <div class="w-full lg:w-3/4 h-full inline-flex gap-2">
+                                                    <img src="\storage\profile-pictures\{{$student->profile_picture}}" alt="" class="w-20 md:w-40 rounded-lg border">
+                                                    {{$student->last_name.', '.$student->first_name.' '.$student->middle_name}}
+                                                </div>
+                                            </div>
                                             
                                             <div class="lg:w-3/4 mx-auto my-8">
                                                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
                                                     <div class="mt-1 col-start-1 text-lg">Student information</div>
                                                     <label for="" class="text-slate-500 col-start-1">Email</label>
                                                     <div class="mb-3">
-                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->user->email}}" readonly>
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->user->email}}" readonly>
                                                     </div>
 
                                                     <label for="" class="text-slate-500 col-start-1">Last name</label>
                                                     <div class="mb-1">
-                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->last_name}}" readonly>
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->last_name}}" readonly>
                                                     </div>
 
                                                     <label for="" class="text-slate-500 col-start-1">First name</label>
                                                     <div class="mb-1">
-                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->first_name}}" readonly>
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->first_name}}" readonly>
                                                     </div>
 
                                                     <label for="" class="text-slate-500 col-start-1">Middle name</label>
                                                     <div class="mb-3">
-                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->middle_name}}" readonly>
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->middle_name}}" readonly>
                                                     </div>
 
                                                     <label for="" class="text-slate-500 col-start-1">Birthday</label>
                                                     <div class="mb-3">
-                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{date_format($student->birthday,"F d, Y")}}" readonly>
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{date_format($student->birthday,"F d, Y")}}" readonly>
                                                     </div>
                                                     
                                                     <div class="mt-1 col-start-1 text-lg">Address</div>
                                                     <label for="" class="text-slate-500 col-start-1">House and Street</label>
                                                     <div class="mb-1">
-                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->house_and_street}}" readonly>
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->house_and_street}}" readonly>
                                                     </div>
 
                                                     <label for="" class="text-slate-500">City / Municipality</label>
                                                     <div class="mb-1">
-                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->city_or_municipality}}" readonly>
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->city_or_municipality}}" readonly>
                                                     </div>
 
                                                     <label for="" class="text-slate-500">Province</label>
                                                     <div class="mb-1">
-                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full" value="{{$student->province}}" readonly>
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->province}}" readonly>
                                                     </div>
 
                                                 </div>
@@ -372,7 +385,13 @@
                                 </svg>
                                 Please make sure the email of the student is correct before admitting a student
                             </div>
-                            
+                            <div class="">
+                                <div class="inline-flex gap-2 items-center text-sm">
+                                    Search
+                                    <input type="text" wire:keyup="filterPendingStudents($event.target.value)"
+                                    class="rounded border py-1 px-2 outline-slate-500">
+                                </div>
+                            </div>
                             <div class="block p-2">
                                 <div class="w-full grid grid-cols-6 rounded-full shadow p-2 my-2 bg-slate-600 text-slate-50 text-sm font-bold px-4 gap-2">
                                     <div class="hidden md:inline-flex lg:hidden col-span-2 cursor-pointer" wire:click="sortPendingStudents('name')">
@@ -419,6 +438,14 @@
                                         Action
                                     </div>
                                 </div>
+                                @if ($pending_students->count()<1)
+                                    <div class="inline-flex w-full justify-center items-center gap-2 p-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                                        </svg>
+                                        <span class="text-lg">There's nothing here</span>
+                                    </div>
+                                @endif
                                 @foreach ($pending_students as $student)
                 
                                 <div x-data="{expanded: false}" x-on:click="expanded =! expanded"
@@ -443,9 +470,69 @@
                                         class="rounded text-white bg-green-500 hover:bg-green-600 py-1 px-2 text-sm">
                                             Admit
                                         </button>
-                                        <button class="rounded text-white bg-red-500 hover:bg-red-600 py-1 px-2 text-sm">
+                                        <button wire:click="reject({{$student->id}})" wire:confirm="Are you sure you want to reject this student?"
+                                        class="rounded text-white bg-red-500 hover:bg-red-600 py-1 px-2 text-sm">
                                             Reject
                                         </button>
+                                    </div>
+
+                                    <div class="col-span-full max-h-0 overflow-clip transition-all aria-expanded:block aria-expanded:max-h-[1000px]" x-bind:aria-expanded="expanded">
+                                        <div x-on:click.stop x-on:hover.stop
+                                        class="p-2 w-full border rounded-lg shadow-inner bg-white cursor-auto mt-5 mb-2">
+                                            <div class="text-lg p-2 w-full rounded flex justify-center bg-blue-500 text-white">
+                                                <div class="w-full lg:w-3/4 h-full inline-flex gap-2">
+                                                    <img src="\storage\profile-pictures\{{$student->profile_picture}}" alt="" class="w-20 md:w-40 rounded-lg border">
+                                                    {{$student->last_name.', '.$student->first_name.' '.$student->middle_name}}
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="lg:w-3/4 mx-auto my-8">
+                                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+                                                    <div class="mt-1 col-start-1 text-lg">Student information</div>
+                                                    <label for="" class="text-slate-500 col-start-1">Email</label>
+                                                    <div class="mb-3">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->user->email}}" readonly>
+                                                    </div>
+
+                                                    <label for="" class="text-slate-500 col-start-1">Last name</label>
+                                                    <div class="mb-1">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->last_name}}" readonly>
+                                                    </div>
+
+                                                    <label for="" class="text-slate-500 col-start-1">First name</label>
+                                                    <div class="mb-1">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->first_name}}" readonly>
+                                                    </div>
+
+                                                    <label for="" class="text-slate-500 col-start-1">Middle name</label>
+                                                    <div class="mb-3">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->middle_name}}" readonly>
+                                                    </div>
+
+                                                    <label for="" class="text-slate-500 col-start-1">Birthday</label>
+                                                    <div class="mb-3">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{date_format($student->birthday,"F d, Y")}}" readonly>
+                                                    </div>
+                                                    
+                                                    <div class="mt-1 col-start-1 text-lg">Address</div>
+                                                    <label for="" class="text-slate-500 col-start-1">House and Street</label>
+                                                    <div class="mb-1">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->house_and_street}}" readonly>
+                                                    </div>
+
+                                                    <label for="" class="text-slate-500">City / Municipality</label>
+                                                    <div class="mb-1">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->city_or_municipality}}" readonly>
+                                                    </div>
+
+                                                    <label for="" class="text-slate-500">Province</label>
+                                                    <div class="mb-1">
+                                                        <input type="text" class="rounded py-1 px-2 border bg-slate-100 w-full outline-blue-400" value="{{$student->province}}" readonly>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="col-span-full flex justify-center pt-1">
@@ -454,23 +541,6 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                                             </svg>                                          
                                         </div>                                 
-                                    </div>
-                                    <div class="col-span-full max-h-0 overflow-clip transition-all aria-expanded:block aria-expanded:max-h-[1000px]" x-bind:aria-expanded="expanded">
-                                        <div x-on:click.stop x-on:hover.stop
-                                        class="p-2 w-full border-t border-slate-300 cursor-auto mt-2">
-                                            aw <br>
-                                            aw <br>
-                                            aw <br>
-                                            aw <br>
-                                            aw <br>
-                                            aw <br>
-                                            aw <br>
-                                            aw <br>
-                                            aw <br>
-                                            aw <br>
-                                            aw <br>
-                                            aw <br>
-                                        </div>
                                     </div>
                                 </div>
 

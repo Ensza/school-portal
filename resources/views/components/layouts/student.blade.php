@@ -72,7 +72,7 @@
                     
                     <button id="profile" x-on:click="show_profile =! show_profile"
                     class="text-slate-600 py-1 px-2 inline-flex items-center rounded-full hover:bg-slate-200" type="button">
-                        <img id="profile-image" src="\resources\img\f.png" class="border me-2 border-slate-400 rounded-full" alt="" style="height: 30px; width: 30px">
+                        <img id="profile-image" src="\storage\profile-pictures\{{auth()->user()->profile->profile_picture}}" class="border me-2 border-slate-400 rounded-full" alt="" style="height: 30px; width: 30px">
                         <span id="profile-name" class="m-auto text-light text-nowrap" style="user-select: none;">
                             {{auth()->user()->profile->first_name}}
                             <span class=""><i class="bi bi-caret-down-fill"></i></span>

@@ -86,8 +86,6 @@ class AddClassroom extends Component
                 ]);
             }
 
-            // dispatch an event to refresh parent component
-            $this->dispatch('classroom-created');
             $this->classroom_created = true;
 
             // reset variables
@@ -95,6 +93,9 @@ class AddClassroom extends Component
             $this->reset();
             $this->level = $temp;
             $this->mount();
+            
+            // dispatch an event to refresh parent component
+            $this->dispatch('classroom-created', id: $new_classroom->id);
         }
     }
 

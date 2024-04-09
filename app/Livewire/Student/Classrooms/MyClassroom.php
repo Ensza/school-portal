@@ -2,13 +2,13 @@
 
 namespace App\Livewire\Student\Classrooms;
 
-use App\Models\Profile;
+use App\Models\StudentProfile;
 use Auth;
 use Livewire\Component;
 
 class MyClassroom extends Component
 {
-    public Profile $profile;
+    public StudentProfile $profile;
 
     public function mount(){
         $this->profile = Auth::user()->profile;

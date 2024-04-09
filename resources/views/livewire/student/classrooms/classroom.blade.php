@@ -144,8 +144,10 @@
         <div class="block text-end mt-2">
             
         </div>
-    
+        @if(!auth()->user()->profile->is_enrolled)
+
         <div class="text-center mt-8">
+            
 
             <button wire:click="enroll()" wire:confirm="Are you sure you want to withdraw enrolling in this classroom?" 
             @if (!(auth()->user()->profile->classroom_id == $classroom->id && !auth()->user()->profile->is_enrolled)) 
@@ -168,6 +170,8 @@
             </button>
             
         </div>
+
+        @endif
         
         {{-- loader div --}}
         <x-loader/>

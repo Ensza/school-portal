@@ -46,8 +46,7 @@
                     .$classroom->name.'-'
                     .$classroom->strand->id.'-'
                     .$loop->index
-                    .($selected_classroom && $selected_classroom->id == $classroom->id ? '-selected' : '')
-                    .'-strand-sorted'"
+                    .($selected_classroom && $selected_classroom->id == $classroom->id ? '-selected' : '')"
                     />
         
                     @endforeach

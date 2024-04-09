@@ -32,21 +32,31 @@
                     </div>
                     <div class="p-2 mt-3 text-md">
                         <div class="font-semibold grid gap-2">
-                            <a href="/admin" id="dashboard-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" aria-current="true" wire:navigate>
+                            <a href="/admin" id="dashboard-link" type="button" class="flex gap-3 items-center py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" aria-current="true" wire:navigate>
                                 <i class="bi bi-speedometer2"></i>
                                 Dashboard
                             </a>
-                            <a href="/admin/tracks-and-strands" id="tracks-and-strands-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
+                            <a href="/admin/tracks-and-strands" id="tracks-and-strands-link" type="button" class="flex gap-3 items-center py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
                                 <i class="bi bi-mortarboard"></i>
                                 Tracks and Strands
                             </a>
-                            <a href="/admin/curricula-and-subjects" id="curricula-and-subjects-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
+                            <a href="/admin/curricula-and-subjects" id="curricula-and-subjects-link" type="button" class="flex gap-3 items-center py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
                                 <i class="bi bi-book"></i>
                                 Curricula and Subjects
                             </a>
-                            <a href="/admin/classrooms" id="classrooms-link" type="button" class="flex gap-3 items-center w-full py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
+                            <a href="/admin/classrooms" id="classrooms-link" type="button" class="flex gap-3 items-center py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
                                 <i class="bi bi-door-closed"></i>
                                 Classrooms
+                            </a>
+                            <a href="/admin/faculties" id="faculties-link" type="button" class="flex gap-3 items-center py-1 px-3 rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
+                                <i class="bi bi-person-video3"></i>
+                                Faculties
+                            </a>
+                            <a href="/admin/faculties/register" id="faculties-register-link" type="button" class="flex gap-3 items-center py-1 
+                            px-3 text-sm ms-4
+                            rounded hover:bg-slate-700 aria-selected:bg-slate-500" wire:navigate>
+                                <i class="bi bi-person-plus"></i>
+                                Register
                             </a>
                         </div>
                     </div>

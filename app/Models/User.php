@@ -62,7 +62,22 @@ class User extends Authenticatable
         return false;
     }
 
+    // method for checking if the user is a faculty
+    public function isFaculty(){
+        if($this->role == "faculty"){
+            return true;
+        }
+
+        return false;
+    }
+
     public function profile(){
-        return $this->hasOne(Profile::class);
+        if($this->isStudent()){
+            return $this->hasOne(StudentProfile::class);
+        }
+
+        if($this->isFaculty()){
+            return $this->hasOne(FacultyProfile::class);
+        }
     }
 }

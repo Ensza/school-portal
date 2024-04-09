@@ -23,7 +23,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Level|null $level
  * @property-read \App\Models\Strand|null $strand
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Profile> $students
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\StudentProfile> $students
  * @property-read int|null $students_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ClassroomSubject> $subjects
  * @property-read int|null $subjects_count
@@ -101,6 +101,45 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property int $user_id
+ * @property int $classroom_id
+ * @property int $is_adviser
+ * @property string $first_name
+ * @property string|null $middle_name
+ * @property string $last_name
+ * @property string $birthday
+ * @property string $house_and_street
+ * @property string $city_or_municipality
+ * @property string $province
+ * @property string $profile_picture
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile query()
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereBirthday($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereCityOrMunicipality($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereClassroomId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereHouseAndStreet($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereIsAdviser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereMiddleName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereProfilePicture($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereProvince($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile whereUserId($value)
+ */
+	class FacultyProfile extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -115,45 +154,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Level whereUpdatedAt($value)
  */
 	class Level extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * 
- *
- * @property int $id
- * @property int $user_id
- * @property int $classroom_id
- * @property int $is_enrolled
- * @property string $first_name
- * @property string|null $middle_name
- * @property string $last_name
- * @property \Illuminate\Support\Carbon $birthday
- * @property string $house_and_street
- * @property string $city_or_municipality
- * @property string $province
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Classroom|null $classroom
- * @property-read \App\Models\User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder|Profile newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Profile newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Profile query()
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereBirthday($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCityOrMunicipality($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereClassroomId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereFirstName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereHouseAndStreet($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereIsEnrolled($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereMiddleName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereProvince($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUserId($value)
- */
-	class Profile extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -178,6 +178,47 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Strand whereUpdatedAt($value)
  */
 	class Strand extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $classroom_id
+ * @property int $is_enrolled
+ * @property string $first_name
+ * @property string|null $middle_name
+ * @property string $last_name
+ * @property \Illuminate\Support\Carbon $birthday
+ * @property string $house_and_street
+ * @property string $city_or_municipality
+ * @property string $province
+ * @property string $profile_picture
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Classroom|null $classroom
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile query()
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereBirthday($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereCityOrMunicipality($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereClassroomId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereHouseAndStreet($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereIsEnrolled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereMiddleName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereProfilePicture($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereProvince($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentProfile whereUserId($value)
+ */
+	class StudentProfile extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -239,7 +280,6 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \App\Models\Profile|null $profile
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])

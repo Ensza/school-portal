@@ -1,14 +1,17 @@
 <?php
 
 use App\Livewire\Admin\Classrooms\Classrooms;
+use App\Livewire\Admin\Faculties\Faculties;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LoginController;
 use App\Livewire\Admin\CurriculaAndSubjects\CurriculaAndSubjects;
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\Faculties\Register;
 use App\Livewire\Admin\TracksAndStrands\TracksAndStrands;
 use App\Livewire\Student\Classrooms\Classrooms as StudentClassrooms;
 use App\Livewire\Student\Classrooms\MyClassroom;
+use App\Livewire\Test;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +61,8 @@ Route::middleware('admin')->group(function () {
     Route::get('admin/tracks-and-strands', TracksAndStrands::class)->name('tracks-and-strands');
     Route::get('admin/curricula-and-subjects', CurriculaAndSubjects::class)->name('curricula-and-subjects');
     Route::get('admin/classrooms', Classrooms::class)->name('classrooms');
+    Route::get('admin/faculties', Faculties::class)->name('faculties');
+    Route::get('admin/faculties/register', Register::class)->name('faculties-register');
 
     //--------------------------------------------------------------------------------------------------------
 
@@ -83,6 +88,4 @@ Route::middleware('student')->group(function () {
 /////////////////////////////////////////////////////////
 
 
-Route::get('test', function(){
-    return view('test');
-});
+Route::get('test', Test::class);

@@ -5,8 +5,8 @@ namespace App\Livewire\Admin\Classrooms;
 use App\Models\Classroom as ModelsClassroom;
 use App\Models\ClassroomSubject;
 use App\Models\Curriculum;
-use App\Models\Profile;
 use App\Models\Strand;
+use App\Models\StudentProfile;
 use Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -55,9 +55,7 @@ class Classroom extends Component
 
     public function updateStudentsCollection(){
         if(Auth::user()->isAdmin()){
-            $students = $this->classroom->students->where(function($m){
-                return $m->user->role;
-            }, 'student');
+            $students = $this->classroom->students;
 
             $this->students = $students->where('is_enrolled', true);
             $this->pending_students = $students->where('is_enrolled', false);
@@ -65,10 +63,10 @@ class Classroom extends Component
     }
 
     public function admit(int $id){
-        $student = Profile::find($id);
+        $student = StudentProfile::find($id);
 
         if(Auth::user()->isAdmin()){
-            if($student->user->isStudent() && !$student->is_enrolled && $student->classroom_id == $this->classroom->id){
+            if(!$student->is_enrolled && $student->classroom_id == $this->classroom->id){
                 $student->is_enrolled = true;
                 $student->save();
 
@@ -77,21 +75,95 @@ class Classroom extends Component
         }
     }
 
-    public function filterStudents(){
+    public function reject(int $id){
+        $student = StudentProfile::find($id);
+
+        if(Auth::user()->isAdmin()){
+            if(!$student->is_enrolled && $student->classroom_id == $this->classroom->id){
+                $student->classroom_id = 0;
+                $student->save();
+
+                $this->updateStudentsCollection();
+            }
+        }
+    }
+
+    public function filterStudents($search){
         $this->updateStudentsCollection();
 
-        $this->search_students = strtolower($this->search_students);
+        if(!$search){ // if search input is empty, return immediately 
+            return;
+        }
 
-        $this->students = $this->students->filter(function($m) {
-            return 
-            false !== strpos(strtolower($m->first_name), $this->search_students) ||
-            false !== strpos(strtolower($m->middle_name), $this->search_students) ||
-            false !== strpos(strtolower($m->last_name), $this->search_students) ||
-            false !== strpos(strtolower($m->user->email), $this->search_students) ||
-            false !== strpos(strtolower($m->first_name.' '.$m->last_name), $this->search_students);
+        $this->students = $this->students->filter(function($m) use($search) {
+
+            $search_students = strtolower($search);
+            $search_query = explode(' ', $search_students); // separate the search query for each spaces
+
+            // combine all the column values as one string
+            $profile = strtolower(
+                $m->first_name.' '.
+                $m->middle_name.' '.
+                $m->last_name.' '.
+                $m->user->email.' '.
+                $m->house_and_street.' '.
+                $m->city_or_municipality.' '.
+                $m->province
+            );
+
+            // filter the profile string for each search query, return false if one search query fails
+            foreach ($search_query as $search_query_value) {
+                if($search_query_value){
+                    if(false === strpos($profile, $search_query_value)){
+                        return false;
+                    }
+                }
+                
+            }
+
+            return true;
         });
 
         $this->sortStudents($this->sort_students_by);
+    }
+
+    public function filterPendingStudents($search){
+        $this->updateStudentsCollection();
+
+        if(!$search){ // if search input is empty, return immediately 
+            return;
+        }
+
+        $this->pending_students = $this->pending_students->filter(function($m) use($search) {
+
+            $search_students = strtolower($search);
+            $search_query = explode(' ', $search_students); // separate the search query for each spaces
+
+            // combine all the column values as one string
+            $profile = strtolower(
+                $m->first_name.' '.
+                $m->middle_name.' '.
+                $m->last_name.' '.
+                $m->user->email.' '.
+                $m->house_and_street.' '.
+                $m->city_or_municipality.' '.
+                $m->province
+            );
+
+            // filter the profile string for each search query, return false if one search query fails
+            foreach ($search_query as $search_query_value) {
+                if($search_query_value){
+                    if(false === strpos($profile, $search_query_value)){
+                        return false;
+                    }
+                }
+                
+            }
+
+            return true;
+        });
+
+        $this->sortPendingStudents($this->sort_pending_students_by);
     }
 
     public function sortStudents($sort_by){
