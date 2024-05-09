@@ -21,6 +21,7 @@ namespace App\Models{
  * @property int $level_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\FacultyProfile|null $adviser
  * @property-read \App\Models\Level|null $level
  * @property-read \App\Models\Strand|null $strand
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\StudentProfile> $students
@@ -107,13 +108,15 @@ namespace App\Models{
  * @property string $first_name
  * @property string|null $middle_name
  * @property string $last_name
- * @property string $birthday
+ * @property \Illuminate\Support\Carbon $birthday
  * @property string $house_and_street
  * @property string $city_or_municipality
  * @property string $province
  * @property string $profile_picture
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Classroom|null $classroom
+ * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FacultyProfile query()

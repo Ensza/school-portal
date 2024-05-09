@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Mail\EmailVerification;
-use App\Models\Profile;
+use App\Models\StudentProfile;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -95,7 +95,7 @@ class Register extends Component
             'role'=>'student'
         ]);
 
-        $profile = Profile::create([
+        $profile = StudentProfile::create([
             'user_id'=>$user->id,
             'classroom_id'=>0,
             'first_name'=>$form_data['first_name'],

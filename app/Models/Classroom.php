@@ -30,5 +30,9 @@ class Classroom extends Model
         return $this->hasMany(StudentProfile::class);
     }
 
+    public function adviser(){
+        return $this->hasOne(FacultyProfile::class);
+    }
+
     use HasFactory;
 }
